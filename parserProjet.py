@@ -12,30 +12,46 @@ def p_programme_statement(p):
 
 
 def p_programme_recursive(p):
-    ''' programme : statement ';' programme '''
-    p[0] = AST.ProgramNode([p[1]] + p[3].children)
+    ''' programme : statement programme '''
+    p[0] = AST.ProgramNode([p[1]] + p[2].children)
 
 
 def p_statement(p):
-    ''' statement : assignation
+    ''' statement : assignation ';'
         | structure '''
     p[0] = p[1]
 
 
-def p_statement_print(p):
-    ''' statement : PRINT expression '''
-    p[0] = AST.PrintNode(p[2])
+def p_statement_echo(p):
+    ''' statement : ECHO expression_printable '''
+    p[0] = AST.EchoNode(p[2])
 
 
-def p_structure(p):
-    ''' structure : WHILE expression '{' programme '}' '''
-    p[0] = AST.WhileNode([p[2], p[4]])
+def p_structure_while(p):
+    ''' structure : WHILE '(' expression ')' '{' programme '}' '''
+    p[0] = AST.WhileNode([p[3], p[6]])
+
+
+def p_structure_if(p):
+    ''' structure : IF '(' expression ')' '{' programme '}' '''
+    p[0] = AST.IfNode([p[3], p[6]])
+
+
+def p_structure_if_else(p):
+    ''' structure : IF '(' expression ')' '{' programme '}' ELSE '{' programme '}' '''
+    p[0] = AST.IfNode([p[3], [p[6], p[10]]])
 
 
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
             | expression MUL_OP expression'''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
+
+
+def p_expression_printable(p):
+    ''' expression_printable : '"' IDENTIFIER '"'
+        | expression_printable '.' expression_printable
+        | expression_printable '.' variable '''
 
 
 def p_expression_num_or_var(p):

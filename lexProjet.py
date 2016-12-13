@@ -2,11 +2,8 @@ import ply.lex as lex
 
 reserved_words = (
     'while',
-    'for',
     'if',
     'else',
-    'switch',
-    'case',
     'echo'
 )
 
