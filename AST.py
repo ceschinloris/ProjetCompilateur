@@ -127,6 +127,10 @@ class AssignNode(Node):
     type = '='
 
 
+class CompareNode(Node):
+    type = 'compare'
+
+
 class EchoNode(Node):
     type = 'echo'
 
@@ -134,12 +138,17 @@ class EchoNode(Node):
 class WhileNode(Node):
     type = 'while'
 
+
 class PrintableNode(Node):
     type = 'printable'
 
 
 class IfNode(Node):
     type = 'if'
+
+
+class ForNode(Node):
+    type = 'for'
 
 
 class EntryNode(Node):
