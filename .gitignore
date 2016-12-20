@@ -1,1 +1,6 @@
 .idea
+/__pycache__/AST.cpython-35.pyc
+/__pycache__/lexProjet.cpython-35.pyc
+/codeTest-ast.pdf
+/generated/parser.out
+/generated/parsetab.py
