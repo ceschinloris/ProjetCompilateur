@@ -134,6 +134,9 @@ class EchoNode(Node):
 class WhileNode(Node):
     type = 'while'
 
+class PrintableNode(Node):
+    type = 'printable'
+
 
 class IfNode(Node):
     type = 'if'
