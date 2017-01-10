@@ -127,6 +127,10 @@ class AssignNode(Node):
     type = '='
 
 
+class AssignOpNode(Node):
+    type = 'assign op node'
+
+
 class CompareNode(Node):
     type = 'compare'
 
@@ -141,6 +145,10 @@ class WhileNode(Node):
 
 class PrintableNode(Node):
     type = 'printable'
+
+
+class StringNode(Node):
+    type = 'string'
 
 
 class IfNode(Node):

@@ -22,12 +22,13 @@ def p_programme(p):
 # ---------------
 def p_statement(p):
     ''' statement : assignation ';'
-                | structure
-                | ECHO printable '''
-    try:
-        p[0] = AST.EchoNode(p[2])
-    except:
-        p[0] = p[1]
+                | structure '''
+    p[0] = p[1]
+
+
+def p_statement_echo(p):
+    ''' statement : ECHO printable '''
+    p[0] = AST.EchoNode(p[2])
 
 
 # ---------------
@@ -53,6 +54,7 @@ def p_structure_for(p):
                 | FOR '(' assignation ';' comparaison ';' expression ')' '{' programme '}' '''
     p[0] = AST.ForNode(p[3], p[5], p[7], p[10])
 
+
 # ---------------
 # Assignation
 # ---------------
@@ -60,16 +62,25 @@ def p_assignation(p):
     ''' assignation : VARIABLE ASSIGN expression '''
     p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[3]])
 
+
+def p_assignation_operation(p):
+    ''' assignation : VARIABLE ASSIGN_ADD expression
+                        |VARIABLE ASSIGN_SUB expression
+                        |VARIABLE ASSIGN_MUL expression
+                        |VARIABLE ASSIGN_DIV expression '''
+
+    p[0] = AST.AssignOpNode([p[2], AST.TokenNode(p[1]), p[3]])
+
 # ---------------
 # Comparaison
 # ---------------
 def p_comparaison(p):
     ''' comparaison : expression COMP_LT expression
-                    | expression COMP_GT expression
-                    | expression COMP_LT_EQUALS expression
-                    | expression COMP_GT_EQUALS expression
-                    | expression COMP_EQUALS expression
-                    | expression COMP_NOT_EQUALS expression '''
+                | expression COMP_GT expression
+                | expression COMP_LT_EQUALS expression
+                | expression COMP_GT_EQUALS expression
+                | expression COMP_EQUALS expression
+                | expression COMP_NOT_EQUALS expression '''
     p[0] = AST.CompareNode(p[2], p[1], p[3])
 
 
@@ -78,12 +89,13 @@ def p_comparaison(p):
 # ---------------
 def p_printable(p):
     ''' printable : STRING
-                | expression
-                | printable '.' printable '''
-    try:
-        p[0] = AST.PrintableNode(p[1], p[3])
-    except:
-        p[0] = AST.PrintableNode(p[1])
+                | expression '''
+    p[0] = AST.StringNode(p[1])
+
+
+def p_printable_recursive(p):
+    ''' printable : printable '.' printable '''
+    p[0] = AST.PrintableNode(p[1], p[3])
 
 
 # ---------------
@@ -111,10 +123,9 @@ def p_expression_paren(p):
 def p_error(p):
     if p:
         print("Syntax error in line %d" % p.lineno)
-        yacc.errok()
+        #yacc.errok()
     else:
         print("Sytax error: unexpected end of file!")
-
 
 
 def parse(program):
@@ -130,9 +141,6 @@ if __name__ == "__main__":
     result = yacc.parse(prog)
     if result:
         print(result)
-
-        import os
-
         graph = result.makegraphicaltree()
     else:
         print("Parsing returned no result!")
