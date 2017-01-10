@@ -90,13 +90,13 @@ def p_comparaison(p):
 # Printable
 # ---------------
 def p_printable(p):
-    ''' printable : STRING
-                | expression
-                | printable '.' printable '''
-    try:
-        p[0] = AST.PrintableNode(p[1], p[3])
-    except:
-        p[0] = AST.PrintableNode(p[1])
+    ''' printable : expression '''
+    p[0] = AST.PrintableNode(p[1])
+
+
+def p_printable_recursive(p):
+    ''' printable : printable '.' printable '''
+    p[0] = AST.PrintableNode(p[1], p[3])
 
 
 # ---------------
@@ -104,7 +104,8 @@ def p_printable(p):
 # ---------------
 def p_expression(p):
     ''' expression : NUMBER
-                | VARIABLE '''
+                | VARIABLE
+                | STRING '''
     p[0] = AST.TokenNode(p[1])
 
 
