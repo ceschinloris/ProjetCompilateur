@@ -130,6 +130,14 @@ class AssignNode(Node):
 class CompareNode(Node):
     type = 'compare'
 
+    def __init__(self, op, children):
+        Node.__init__(self, children)
+        self.op = op
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+
 
 class EchoNode(Node):
     type = 'echo'
@@ -146,6 +154,13 @@ class PrintableNode(Node):
 class IfNode(Node):
     type = 'if'
 
+    def __init__(self, comparaison, children):
+        Node.__init__(self, children)
+        self.comparaison = comparaison
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
 
 class ForNode(Node):
     type = 'for'

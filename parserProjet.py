@@ -28,8 +28,13 @@ def p_statement(p):
 
 
 def p_statement_echo(p):
-    ''' statement : ECHO printable '''
+    ''' statement : ECHO expression '''
     p[0] = AST.EchoNode(p[2])
+
+
+def p_statement_echo_recursive(p):
+    ''' statement : ECHO expression '.' expression '''
+    p[0] = AST.EchoNode([p[2], p[4]])
 
 
 # ---------------
@@ -41,12 +46,12 @@ def p_structure_while(p):
 
 
 def p_structure_if(p):
-    ''' structure : IF '(' expression ')' '{' programme '}' '''
-    p[0] = AST.IfNode([p[3], p[6]])
+    ''' structure : IF '(' comparaison ')' '{' programme '}' '''
+    p[0] = AST.IfNode(p[3], [p[6]])
 
 
 def p_structure_if_else(p):
-    ''' structure : IF '(' expression ')' '{' programme '}' ELSE '{' programme '}' '''
+    ''' structure : IF '(' comparaison ')' '{' programme '}' ELSE '{' programme '}' '''
     p[0] = AST.IfNode([p[3], [p[6], p[10]]])
 
 
@@ -83,20 +88,7 @@ def p_comparaison(p):
                     | expression COMP_GT_EQUALS expression
                     | expression COMP_EQUALS expression
                     | expression COMP_NOT_EQUALS expression '''
-    p[0] = AST.CompareNode(p[2], p[1], p[3])
-
-
-# ---------------
-# Printable
-# ---------------
-def p_printable(p):
-    ''' printable : expression '''
-    p[0] = AST.PrintableNode(p[1])
-
-
-def p_printable_recursive(p):
-    ''' printable : printable '.' printable '''
-    p[0] = AST.PrintableNode(p[1], p[3])
+    p[0] = AST.CompareNode(p[2], [p[1], p[3]])
 
 
 # ---------------
