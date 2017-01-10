@@ -65,11 +65,11 @@ def p_assignation(p):
 
 def p_assignation_operation(p):
     ''' assignation : VARIABLE ASSIGN_ADD expression
-                        |VARIABLE ASSIGN_SUB expression
-                        |VARIABLE ASSIGN_MUL expression
-                        |VARIABLE ASSIGN_DIV expression '''
+                    | VARIABLE ASSIGN_SUB expression
+                    | VARIABLE ASSIGN_MUL expression
+                    | VARIABLE ASSIGN_DIV expression '''
 
-    p[0] = AST.AssignOpNode([p[2], AST.TokenNode(p[1]), p[3]])
+    p[0] = AST.AssignOpNode(p[2], [AST.TokenNode(p[1]), p[3]])
 
 # ---------------
 # Comparaison
@@ -118,6 +118,13 @@ def p_expression_op(p):
 def p_expression_paren(p):
     '''expression : '(' expression ')' '''
     p[0] = p[2]
+
+
+def p_expression_increment(p):
+    ''' expression : VARIABLE INCREMENT
+                    | VARIABLE DECREMENT '''
+    p[0] = AST.IncrementNode(p[2], p[1])
+
 
 
 def p_error(p):

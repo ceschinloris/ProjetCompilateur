@@ -27,7 +27,6 @@ tokens = (
              'COMP_GT_EQUALS',
              'COMP_LT',
              'COMP_LT_EQUALS',
-             'IDENTIFIER',
              'STRING',
              'VARIABLE',
          ) + tuple(map(lambda s: s.upper(), reserved_words))
