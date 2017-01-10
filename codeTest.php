@@ -1,1 +1,1 @@
-echo "lo2";
+echo "lol";
