@@ -41,7 +41,7 @@ def p_statement_echo_recursive(p):
 # Structure
 # ---------------
 def p_structure_while(p):
-    ''' structure : WHILE '(' expression ')' '{' programme '}' '''
+    ''' structure : WHILE '(' comparaison ')' '{' programme '}' '''
     p[0] = AST.WhileNode([p[3], p[6]])
 
 

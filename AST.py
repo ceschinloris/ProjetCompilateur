@@ -130,6 +130,11 @@ class AssignNode(Node):
 class AssignOpNode(Node):
     type = "assignop"
 
+    def __init__(self, op, children):
+        Node.__init__(self, children)
+        self.op = op
+
+
 class CompareNode(Node):
     type = 'compare'
 
@@ -165,6 +170,7 @@ class IfNode(Node):
         except AttributeError:
             self.nbargs = 1
 
+
 class ForNode(Node):
     type = 'for'
 
@@ -175,8 +181,10 @@ class EntryNode(Node):
     def __init__(self):
         Node.__init__(self, None)
 
+
 class ExpressionNode(Node):
     type = 'expression'
+
     def __init__(self, value):
         Node.__init__(self, None)
         self.value = value

@@ -1,6 +1,11 @@
-$t = 14
+$t = 41
 $x = "salut"
 if ($t == 14){echo $x}
-echo 10
+while ($t >= 5)
+{
+echo $t
+$t -= 2
+}
+
 
 
