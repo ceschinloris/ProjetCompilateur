@@ -1,8 +1,6 @@
-$t = "lol";
-echo $t
+$t = 14
+$x = "salut"
+if ($t == 14){echo $x}
+echo 10
 
-if($t == "lol")
-{
-    echo $t
-}
 

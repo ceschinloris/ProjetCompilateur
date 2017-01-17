@@ -99,8 +99,8 @@ class ProgramNode(Node):
     type = 'Program'
 
 
-class TokenNode(Node):
-    type = 'token'
+class VariableNode(Node):
+    type = 'variable'
 
     def __init__(self, tok):
         Node.__init__(self)
@@ -126,6 +126,9 @@ class OpNode(Node):
 class AssignNode(Node):
     type = '='
 
+
+class AssignOpNode(Node):
+    type = "assignop"
 
 class CompareNode(Node):
     type = 'compare'
@@ -171,6 +174,12 @@ class EntryNode(Node):
 
     def __init__(self):
         Node.__init__(self, None)
+
+class ExpressionNode(Node):
+    type = 'expression'
+    def __init__(self, value):
+        Node.__init__(self, None)
+        self.value = value
 
 
 def addToClass(cls):

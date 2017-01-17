@@ -22,7 +22,7 @@ def p_programme(p):
 # Statement
 # ---------------
 def p_statement(p):
-    ''' statement : assignation ';'
+    ''' statement : assignation
                 | structure '''
     p[0] = p[1]
 
@@ -66,7 +66,7 @@ def p_structure_for(p):
 # ---------------
 def p_assignation(p):
     ''' assignation : VARIABLE ASSIGN expression '''
-    p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[3]])
+    p[0] = AST.AssignNode([AST.VariableNode(p[1]), p[3]])
 
 
 def p_assignation_operation(p):
@@ -75,7 +75,7 @@ def p_assignation_operation(p):
                     | VARIABLE ASSIGN_MUL expression
                     | VARIABLE ASSIGN_DIV expression '''
 
-    p[0] = AST.AssignOpNode(p[2], [AST.TokenNode(p[1]), p[3]])
+    p[0] = AST.AssignOpNode(p[2], [AST.VariableNode(p[1]), p[3]])
 
 
 # ---------------
@@ -96,11 +96,12 @@ def p_comparaison(p):
 # ---------------
 def p_expression(p):
     ''' expression : NUMBER
-                | VARIABLE
                 | STRING '''
-    p[0] = AST.TokenNode(p[1])
+    p[0] = AST.ExpressionNode(p[1])
 
-
+def p_expression_variable(p):
+    ''' expression : VARIABLE '''
+    p[0] = AST.VariableNode(p[1])
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
                | expression MUL_OP expression
