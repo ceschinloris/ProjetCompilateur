@@ -28,14 +28,17 @@ def p_statement(p):
 
 
 def p_statement_echo(p):
-    ''' statement : ECHO expression '''
+    ''' statement : ECHO echoexpression '''
     p[0] = AST.EchoNode(p[2])
 
 
-def p_statement_echo_recursive(p):
-    ''' statement : ECHO expression '.' expression '''
-    p[0] = AST.EchoNode([p[2], p[4]])
-
+def p_echoexpression(p):
+    ''' echoexpression : expression
+                        | expression '.' echoexpression '''
+    try:
+        p[0] = AST.EchoExpressionNode([p[1], p[3]])
+    except:
+        p[0] = AST.EchoExpressionNode(p[1])
 
 # ---------------
 # Structure
@@ -52,7 +55,7 @@ def p_structure_if(p):
 
 def p_structure_if_else(p):
     ''' structure : IF '(' comparaison ')' '{' programme '}' ELSE '{' programme '}' '''
-    p[0] = AST.IfNode([p[3], [p[6], p[10]]])
+    p[0] = AST.IfNode(p[3], [p[6], p[10]])
 
 
 def p_structure_for(p):

@@ -150,6 +150,16 @@ class CompareNode(Node):
 class EchoNode(Node):
     type = 'echo'
 
+    def __init__(self, children):
+        Node.__init__(self, children)
+
+
+class EchoExpressionNode(Node):
+    type = 'echoExpression'
+
+    def __init__(self, children):
+        Node.__init__(self, children)
+
 
 class WhileNode(Node):
     type = 'while'
