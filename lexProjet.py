@@ -139,6 +139,7 @@ def t_IDENTIFIER(t):
 def t_STRING(t):
     r'\"([^\"]*?[^\"]*?)\"'
     t.value = str(t.value)
+    t.value = t.value[1:-1]
     return t
 
 
