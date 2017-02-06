@@ -58,6 +58,15 @@ def execute(self):
     return reduce(operations[self.op], args)
 
 
+@addToClass(AST.IncrementNode)
+def execute(self):
+    log.debug('IncrementNode')
+    if self.op == '++':
+        vars[self.children[0].tok] += 1
+    else:
+        vars[self.children[0].tok] -= 1
+
+
 @addToClass(AST.AssignNode)
 def execute(self):
     log.debug('AssignNode')

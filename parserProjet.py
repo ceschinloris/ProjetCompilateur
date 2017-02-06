@@ -1,5 +1,4 @@
 import ply.yacc as yacc
-
 from lexProjet import tokens
 import AST
 
@@ -23,6 +22,7 @@ def p_programme(p):
 # ---------------
 def p_statement(p):
     ''' statement : assignation
+                | incrementexpression
                 | structure '''
     p[0] = p[1]
 
@@ -39,6 +39,7 @@ def p_echoexpression(p):
         p[0] = AST.EchoExpressionNode([p[1], p[3]])
     except:
         p[0] = AST.EchoExpressionNode(p[1])
+
 
 # ---------------
 # Structure
@@ -102,9 +103,12 @@ def p_expression(p):
                 | STRING '''
     p[0] = AST.ExpressionNode(p[1])
 
+
 def p_expression_variable(p):
     ''' expression : VARIABLE '''
     p[0] = AST.VariableNode(p[1])
+
+
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
                | expression MUL_OP expression
@@ -119,9 +123,9 @@ def p_expression_paren(p):
 
 
 def p_expression_increment(p):
-    ''' expression : VARIABLE INCREMENT
+    ''' incrementexpression : VARIABLE INCREMENT
                     | VARIABLE DECREMENT '''
-    p[0] = AST.IncrementNode(p[2], p[1])
+    p[0] = AST.IncrementNode(p[2], AST.VariableNode(p[1]))
 
 
 def p_error(p):
@@ -145,8 +149,6 @@ if __name__ == "__main__":
     result = yacc.parse(prog)
     if result:
         print(result)
-
-        import os
 
         graph = result.makegraphicaltree()
     else:
