@@ -4,6 +4,12 @@ import AST
 
 vars = {}
 
+precedence = (
+    ('left', 'ADD_OP'),
+    ('left', 'SUB_OP'),
+    ('left', 'MUL_OP'),
+    ('left', 'DIV_OP')
+)
 
 # ---------------
 # Programme
