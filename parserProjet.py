@@ -67,7 +67,7 @@ def p_structure_if_else(p):
 
 def p_structure_for(p):
     ''' structure : FOR '(' assignation ';' comparaison ';' assignation ')' '{' programme '}'
-                | FOR '(' assignation ';' comparaison ';' expression ')' '{' programme '}' '''
+                | FOR '(' assignation ';' comparaison ';' incrementexpression ')' '{' programme '}' '''
     p[0] = AST.ForNode(p[3], p[5], p[7], p[10])
 
 

@@ -131,6 +131,15 @@ def execute(self):
     vars[self.children[0].tok] = temp
 
 
+@addToClass(AST.ForNode)
+def execute(self):
+    log.debug('ForNode')
+    self.assignation.execute()
+    while self.comparaison.execute() :
+        self.children[0].execute()
+        self.expression.execute()
+
+
 if __name__ == "__main__":
     from parserProjet import parse
     import sys

@@ -192,6 +192,12 @@ class IfNode(Node):
 class ForNode(Node):
     type = 'for'
 
+    def __init__(self, assignation, comparaison, expression, programme):
+        Node.__init__(self, programme)
+        self.assignation = assignation
+        self.comparaison = comparaison
+        self.expression = expression
+
 
 class EntryNode(Node):
     type = 'ENTRY'
