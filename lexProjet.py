@@ -133,8 +133,8 @@ def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
     if t.value in reserved_words:
         t.type = t.value.upper()
-    return t
-
+        return t
+    raise NameError("Error: unknown token \"%s\" at line %s" % (t.value, t.lineno))
 
 def t_STRING(t):
     r'\"([^\"]*?[^\"]*?)\"'
@@ -157,8 +157,7 @@ t_ignore = ' \t'
 
 
 def t_error(t):
-    print("Illegal character '%s'" % repr(t.value[0]))
-    t.lexer.skip(1)
+    raise SyntaxError("Illegal character '%s' at line %d" % (repr(t.value[0]), t.lineno))
 
 
 lex.lex()

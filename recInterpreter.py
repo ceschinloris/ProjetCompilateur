@@ -44,8 +44,7 @@ def execute(self):
         try:
             return vars[self.tok]
         except KeyError:
-            print("*** Error: variable %s undefined!" % self.tok)
-            return self.tok
+            raise KeyError("Error: variable %s undefined!" % self.tok)
     return self.tok
 
 
@@ -144,6 +143,9 @@ if __name__ == "__main__":
     from parserProjet import parse
     import sys
 
-    prog = open(sys.argv[1]).read()
-    ast = parse(prog)
-    ast.execute()
+    try:
+        prog = open(sys.argv[1]).read()
+        ast = parse(prog)
+        ast.execute()
+    except Exception as e:
+        print(e)

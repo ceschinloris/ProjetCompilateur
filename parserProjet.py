@@ -136,10 +136,9 @@ def p_expression_increment(p):
 
 def p_error(p):
     if p:
-        print("Syntax error in line %d" % p.lineno)
-        yacc.errok()
+        raise SyntaxError("Syntax error in line %d (token = \"%s\")" % (p.lineno, p.value))
     else:
-        print("Sytax error: unexpected end of file!")
+        raise SyntaxError("Sytax error: unexpected end of file!")
 
 
 def parse(program):
